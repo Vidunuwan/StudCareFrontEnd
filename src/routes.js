@@ -44,6 +44,7 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import Class from "layouts/class";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -59,20 +60,44 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tables",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
+    name: "Class",
+    key: "class",
+    icon: <Icon fontSize="small">school</Icon>,
+    route: "/class",
+    component: <Class />,
+  },
+  {
+    type: "collapse",
+    name: "Wards",
+    key: "wards",
+    icon: <Icon fontSize="small">hotel</Icon>,
+    route: "/wards",
     component: <Tables />,
   },
   {
     type: "collapse",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: <Billing />,
+    name: "Subjects",
+    key: "subjects",
+    icon: <Icon fontSize="small">science</Icon>,
+    route: "/subjects",
+    component: <Tables />,
   },
+  {
+    type: "collapse",
+    name: "User Management",
+    key: "user_management",
+    icon: <Icon fontSize="small">group</Icon>,
+    route: "/user-management",
+    component: <Tables />,
+  },
+  // {
+  //   type: "collapse",
+  //   name: "Billing",
+  //   key: "billing",
+  //   icon: <Icon fontSize="small">receipt_long</Icon>,
+  //   route: "/billing",
+  //   component: <Billing />,
+  // },
   {
     type: "collapse",
     name: "Notifications",
@@ -83,7 +108,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Profile",
+    name: "My Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
