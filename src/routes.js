@@ -46,6 +46,7 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Classes from "layouts/classes";
 import Wards from "layouts/wards";
+import Subjects from "layouts/subjects";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -81,7 +82,7 @@ const routes = [
     key: "subjects",
     icon: <Icon fontSize="small">science</Icon>,
     route: "/subjects",
-    component: <Tables />,
+    component: <Subjects />,
   },
   {
     type: "collapse",
