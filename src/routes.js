@@ -44,7 +44,8 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
-import Class from "layouts/class";
+import Classes from "layouts/classes";
+import Wards from "layouts/wards";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -60,11 +61,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Class",
-    key: "class",
+    name: "Classes",
+    key: "classes",
     icon: <Icon fontSize="small">school</Icon>,
-    route: "/class",
-    component: <Class />,
+    route: "/classes",
+    component: <Classes />,
   },
   {
     type: "collapse",
@@ -72,7 +73,7 @@ const routes = [
     key: "wards",
     icon: <Icon fontSize="small">hotel</Icon>,
     route: "/wards",
-    component: <Tables />,
+    component: <Wards />,
   },
   {
     type: "collapse",

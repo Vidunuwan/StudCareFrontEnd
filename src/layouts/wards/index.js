@@ -17,7 +17,7 @@ import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 import { Button } from "@mui/material";
 
-function Class() {
+function Wards() {
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
 
@@ -40,7 +40,7 @@ function Class() {
                 onClick={() => console.log("Create Subject button clicked")}
                 style={{ marginLeft: "auto" }} // Adjust the styling as needed
               >
-                Create Class
+                Create Ward
               </Button>
             </MDBox>
           </Grid>
@@ -77,4 +77,4 @@ function Class() {
   );
 }
 
-export default Class;
+export default Wards;
