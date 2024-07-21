@@ -30,6 +30,7 @@ import SignUp from "layouts/authentication/sign-up";
 import Classes from "layouts/classes";
 import Wards from "layouts/wards";
 import Subjects from "layouts/subjects";
+import CreateClass from "layouts/classes/CreateClass";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -52,6 +53,13 @@ const routes = [
     component: <Classes />,
   },
   {
+    type: "",
+    name: "Create Class",
+    key: "create-class",
+    route: "/classes/create-class",
+    component: <CreateClass />,
+  },
+  {
     type: "collapse",
     name: "Wards",
     key: "wards",
@@ -70,7 +78,7 @@ const routes = [
   {
     type: "collapse",
     name: "User Management",
-    key: "user_management",
+    key: "user-management",
     icon: <Icon fontSize="small">group</Icon>,
     route: "/user-management",
     component: <Tables />,
