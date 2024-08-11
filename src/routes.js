@@ -34,6 +34,8 @@ import CreateClass from "layouts/classes/CreateClass";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import UserManagement from "layouts/user-management";
+import CreateUser from "layouts/user-management/CreateUser";
 
 const routes = [
   {
@@ -81,7 +83,14 @@ const routes = [
     key: "user-management",
     icon: <Icon fontSize="small">group</Icon>,
     route: "/user-management",
-    component: <Tables />,
+    component: <UserManagement />,
+  },
+  {
+    type: "",
+    name: "Create User",
+    key: "create-user",
+    route: "/user-management/create-user",
+    component: <CreateUser />,
   },
   // {
   //   type: "collapse",
