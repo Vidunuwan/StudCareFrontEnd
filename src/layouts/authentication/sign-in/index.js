@@ -37,11 +37,12 @@ import MDButton from "components/MDButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
+import CoverLayout from "../components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
-function Basic() {
+function SingIn() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
@@ -127,5 +128,4 @@ function Basic() {
     </BasicLayout>
   );
 }
-
-export default Basic;
+export default SingIn;
