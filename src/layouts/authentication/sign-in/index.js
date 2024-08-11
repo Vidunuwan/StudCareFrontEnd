@@ -45,6 +45,7 @@ import { Password } from "@mui/icons-material";
 import axios from "axios";
 import { API_ENDPOINTS } from "api/endpoints";
 import api from "api/api";
+import { useNavigate } from "react-router-dom";
 
 function SingIn() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -56,6 +57,10 @@ function SingIn() {
     password: ""
   });
 
+  const navigate = useNavigate();
+
+  const [loginError, setLoginError] = useState(null);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials({ ...credentials, [name]: value });
@@ -64,9 +69,18 @@ function SingIn() {
   const handleLogin = async () => {
     try {
       const response = await api.post(API_ENDPOINTS.LOGIN, credentials);
-      console.log(response);
+      const data = response.data;
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('authUser', data.user);
+        setLoginError(null);
+        navigate("/dashboard");
+      } else {
+        setLoginError("Login Fail");
+      }
     } catch (error) {
-      console.log("Error", error);
+      // setLoginError(error.message);
+      setLoginError("Login Fail");
     }
   };
 
@@ -113,6 +127,20 @@ function SingIn() {
             <MDBox mb={2}>
               <MDInput type="password" label="Password" name="password" fullWidth onChange={handleChange} />
             </MDBox>
+            {loginError &&
+              <MDBox mb={2}
+                style={{
+                  color: 'red',
+                  backgroundColor: '#ffe6e6',
+                  padding: '10px',
+                  borderRadius: '4px',
+                  fontWeight: 'bold',
+                  fontSize: '0.875rem', // small font size
+                  textAlign: 'center'
+                }}>
+                {loginError}
+              </MDBox>
+            }
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
               <MDTypography
