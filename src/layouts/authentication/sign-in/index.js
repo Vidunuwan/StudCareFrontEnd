@@ -40,7 +40,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import CoverLayout from "../components/CoverLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/bg-sign-in-basic2.jpg";
 import { Password } from "@mui/icons-material";
 import axios from "axios";
 import { API_ENDPOINTS } from "api/endpoints";
@@ -89,7 +89,7 @@ function SingIn() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="#4caf50"
           borderRadius="lg"
           coloredShadow="info"
           mx={2}
@@ -97,11 +97,15 @@ function SingIn() {
           p={2}
           mb={1}
           textAlign="center"
+          sx={{
+            backgroundColor: "#4caf50", // custom background color
+          }}
         >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Sign in
+          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}
+          >
+            STUD CARE
           </MDTypography>
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
+          {/* <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
             <Grid item xs={2}>
               <MDTypography component={MuiLink} href="#" variant="body1" color="white">
                 <FacebookIcon color="inherit" />
@@ -117,7 +121,7 @@ function SingIn() {
                 <GoogleIcon color="inherit" />
               </MDTypography>
             </Grid>
-          </Grid>
+          </Grid> */}
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
@@ -154,7 +158,14 @@ function SingIn() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth onClick={handleLogin}>
+              <MDButton variant="gradient"
+                sx={{
+                  backgroundColor: "#4caf50", // custom background color
+                  color: "#ffffff", // custom text color
+                  "&:hover": {
+                    backgroundColor: "#388e3c", // custom hover color
+                  },
+                }} fullWidth onClick={handleLogin}>
                 sign in
               </MDButton>
             </MDBox>
@@ -168,6 +179,7 @@ function SingIn() {
                   color="info"
                   fontWeight="medium"
                   textGradient
+
                 >
                   Sign up
                 </MDTypography>
