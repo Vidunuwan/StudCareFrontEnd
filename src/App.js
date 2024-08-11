@@ -55,6 +55,7 @@ import brandDark from "assets/images/brand-stud-care.png";
 
 import SingIn from "layouts/authentication/sign-in";
 import { Login } from "@mui/icons-material";
+import SingUp from "layouts/authentication/sign-up";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
