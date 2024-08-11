@@ -128,10 +128,10 @@ function CreateUser() {
                                                     value={values.role}
                                                     onChange={handleChange}
                                                 >
-                                                    <MenuItem value={"student"}>Student</MenuItem>
-                                                    <MenuItem value={"teacher"}>Teacher</MenuItem>
-                                                    <MenuItem value={"hostelMaster"}>Hostel Master</MenuItem>
-                                                    <MenuItem value={"admin"}>Admin</MenuItem>
+                                                    <MenuItem value={"STUDENT"}>Student</MenuItem>
+                                                    <MenuItem value={"TEACHER"}>Teacher</MenuItem>
+                                                    <MenuItem value={"HOSTEL_MASTER"}>Hostel Master</MenuItem>
+                                                    <MenuItem value={"ADMINISTRATOR"}>Admin</MenuItem>
                                                 </Select>
                                             </FormControl>
                                         </MDBox>
