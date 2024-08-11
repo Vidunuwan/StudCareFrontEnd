@@ -41,11 +41,34 @@ import CoverLayout from "../components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import { Password } from "@mui/icons-material";
+import axios from "axios";
+import { API_ENDPOINTS } from "api/endpoints";
+import api from "api/api";
 
 function SingIn() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials({ ...credentials, [name]: value });
+  };
+
+  const handleLogin = async () => {
+    try {
+      const response = await api.post(API_ENDPOINTS.LOGIN, credentials);
+      console.log(response);
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
 
   return (
     <BasicLayout image={bgImage}>
@@ -85,10 +108,10 @@ function SingIn() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput type="email" label="Email" name="email" fullWidth onChange={handleChange} />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput type="password" label="Password" name="password" fullWidth onChange={handleChange} />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -103,7 +126,7 @@ function SingIn() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" color="info" fullWidth onClick={handleLogin}>
                 sign in
               </MDButton>
             </MDBox>

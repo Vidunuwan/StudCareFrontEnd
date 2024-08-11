@@ -2,7 +2,7 @@ import { error } from "ajv/dist/vocabularies/applicator/dependencies";
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL,
+    baseURL: "http://20.41.86.240:9090",
     timeout: 10000,
 });
 
