@@ -3,6 +3,8 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MuiLink from "@mui/material/Link";
 
+import Swal from 'sweetalert2'
+
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
@@ -14,18 +16,31 @@ import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import { useState } from "react";
+import api from "api/api";
+import { API_ENDPOINTS } from "api/endpoints";
+
 
 function CreateUser() {
+
+    const showAlert = () => {
+        Swal.fire({
+            title: 'Success!',
+            text: 'User created success',
+            icon: 'success',
+        })
+    };
+
     const [values, setValues] = useState({
-        firstName: "",
-        lastName: "",
+        username: "",
+        password: "",
         email: "",
         role: "",
+        isClassTeacher: false
     });
 
     const [errors, setErrors] = useState({
-        firstName: "",
-        lastName: "",
+        username: "",
+        password: "",
         email: "",
         role: "",
     });
@@ -50,10 +65,26 @@ function CreateUser() {
         return isValid;
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (validate()) {
-            console.log(values);
+            const formData = values;
+            console.log(formData);
+
+            try {
+                const response = await api.post(API_ENDPOINTS.CREATE_USERS, formData);
+                const data = response.data;
+                console.log("Success", data);
+                showAlert();
+                setValues({
+                    username: "",
+                    password: "",
+                    email: "",
+                    role: "",
+                });
+            } catch (error) {
+                console.log("Error", error);
+            }
         } else {
             console.log("Error", errors);
         }
@@ -87,21 +118,21 @@ function CreateUser() {
                                             <MDInput
                                                 error={!!errors.firstName}
                                                 type="text"
-                                                label="First Name"
-                                                name="firstName"
+                                                label="User Name"
+                                                name="username"
                                                 fullWidth
-                                                value={values.firstName}
+                                                value={values.username}
                                                 onChange={handleChange}
                                             />
                                         </MDBox>
                                         <MDBox m={1} pb={2} width={"25%"}>
                                             <MDInput
                                                 error={!!errors.lastName}
-                                                type="text"
-                                                label="First Name"
-                                                name="lastName"
+                                                type="password"
+                                                label="Password"
+                                                name="password"
                                                 fullWidth
-                                                value={values.lastName}
+                                                value={values.password}
                                                 onChange={handleChange}
                                             />
                                         </MDBox>

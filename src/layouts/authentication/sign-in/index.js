@@ -72,7 +72,7 @@ function SingIn() {
       const data = response.data;
       if (data.token) {
         localStorage.setItem('authToken', data.token);
-        localStorage.setItem('authUser', data.user);
+        localStorage.setItem('authUser', JSON.stringify(data.user));
         setLoginError(null);
         navigate("/dashboard");
       } else {
