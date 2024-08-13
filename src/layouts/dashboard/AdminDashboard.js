@@ -34,15 +34,59 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+import api from "api/api";
+import { API_ENDPOINTS } from "api/endpoints";
+import { useEffect, useState } from "react";
 
-function Dashboard() {
+function AdminDashboard() {
   const { sales, tasks } = reportsLineChartData;
+
+  const [totalUsers, setTotalUsers] = useState({
+    students: 0,
+    teachers: 0,
+    hostelMasters: 0,
+    admins: 0,
+    total: 0
+  });
+
+  const getUsers = async () => {
+    try {
+      const response = await api.get(`${API_ENDPOINTS.GET_USERS}?role=all`);
+      const users = response.data;
+      return users.data;
+
+    } catch (error) {
+      return [];
+    }
+  };
+
+  useEffect(() => {
+
+    async function calculateUsers() {
+      const users = await getUsers();
+
+      const teachers = users.filter((user) => { return user.role == "TEACHER" });
+      const students = users.filter((user) => { return user.role == "STUDENT" });
+      const hostelMasters = users.filter((user) => { return user.role == "HOSTEL_MASTER" });
+      const admins = users.filter((user) => { return user.role == "ADMINISTRATOR" });
+
+      setTotalUsers({
+        students: students.length,
+        teachers: teachers.length,
+        hostelMasters: hostelMasters.length,
+        admins: admins.length,
+        total: users.length
+      });
+
+    }
+
+    calculateUsers();
+  }, [])
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
-
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
@@ -50,7 +94,36 @@ function Dashboard() {
                 color="primary"
                 icon="person_add"
                 title="Total Users"
-                count="157"
+                count={totalUsers.total}
+                percentage={{
+                  color: "success",
+                  amount: "",
+                  label: `With ${totalUsers.admins} Admins`,
+                }}
+              />
+            </MDBox>
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <ComplexStatisticsCard
+                color="dark"
+                icon="weekend"
+                title="Students"
+                count={totalUsers.students}
+                percentage={{
+                  color: "success",
+                  amount: "",
+                  label: "Just updated",
+                }}
+              />
+            </MDBox>
+          </Grid>
+          <Grid item xs={23} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <ComplexStatisticsCard
+                icon="leaderboard"
+                title="Teachers"
+                count={totalUsers.teachers}
                 percentage={{
                   color: "success",
                   amount: "",
@@ -62,43 +135,14 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="Students"
-                count={101}
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={23} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Teachers"
-                count="8"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
                 color="success"
                 icon="store"
                 title="Hostel Masters"
-                count="12"
+                count={totalUsers.hostelMasters}
                 percentage={{
                   color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
+                  amount: "",
+                  label: "Just updated",
                 }}
               />
             </MDBox>
@@ -161,4 +205,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default AdminDashboard;

@@ -19,7 +19,6 @@
   10. The `component` key is used to store the component of its route.
 */
 
-import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
@@ -38,6 +37,7 @@ import UserManagement from "layouts/user-management";
 import CreateUser from "layouts/user-management/CreateUser";
 import CreateWard from "layouts/wards/createWard";
 import CreateSuject from "layouts/subjects/CreateSubject";
+import AdminDashboard from "layouts/dashboard/AdminDashboard";
 
 const authUser = JSON.parse(localStorage.getItem('authUser'));
 const userRole = authUser?.role || "";
@@ -49,7 +49,7 @@ const allRoutes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+    component: <AdminDashboard />,
   },
   {
     type: "collapse",
@@ -161,7 +161,7 @@ const teachersRoutes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+    component: <AdminDashboard />,
   },
   {
     type: "collapse",
@@ -204,7 +204,7 @@ const studentsRoutes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+    component: <AdminDashboard />,
   },
   {
     type: "collapse",
@@ -255,7 +255,7 @@ const hostelMastersRoutes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+    component: <AdminDashboard />,
   },
   {
     type: "collapse",
