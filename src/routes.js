@@ -42,6 +42,7 @@ import StudentDashboard from "layouts/dashboard/StudentDashboard";
 import StudentClass from "layouts/classes/studentIndex";
 import StudentWard from "layouts/wards/studetIndex";
 import StudentSubject from "layouts/subjects/StudentIndex";
+import TeacherDashboard from "layouts/dashboard/TeacherDashboard";
 
 const authUser = JSON.parse(localStorage.getItem('authUser'));
 const userRole = authUser?.role || "";
@@ -165,7 +166,7 @@ const teachersRoutes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <AdminDashboard />,
+    component: <TeacherDashboard />,
   },
   {
     type: "collapse",
