@@ -18,21 +18,37 @@ import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import { useState } from "react";
 import { Password } from "@mui/icons-material";
+import api from "api/api";
+import { API_ENDPOINTS } from "api/endpoints";
+
 
 function CreateClass() {
   const [values, setValues] = useState({
     className: "",
-    classTeacher: "",
+    classTeacher: {
+      email: ""
+    },
   });
 
   const [errors, setErrors] = useState({
     className: "",
-    classTeacher: "",
+    classTeacher: {
+      email: ""
+    },
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
+    if (name === "classTeacher") {
+      setValues({
+        ...values,
+        classTeacher: {
+          email: value,
+        },
+      });
+    } else {
+      setValues({ ...values, [name]: value });
+    }
   };
 
   const validate = () => {
@@ -50,10 +66,30 @@ function CreateClass() {
     return isValid;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (validate()) {
-      console.log(values);
+      const formData = values;
+      console.log(formData);
+      try {
+        const response = await api.post(API_ENDPOINTS.CREATE_CLASS, formData);
+        const data = response.data;
+        showAlert();
+        setValues({
+          className: "",
+          classTeacher: {
+            email: ""
+          },
+        });
+      } catch (error) {
+        console.log("Error", error);
+        setValues({
+          className: "",
+          classTeacher: {
+            email: ""
+          },
+        });
+      }
     } else {
       console.log("Error", errors);
     }
@@ -96,7 +132,7 @@ function CreateClass() {
                       />
                     </MDBox>
                     <MDBox m={1} pb={2} width={"25%"}>
-                      <FormControl fullWidth variant="outlined" error={!!errors.classTeacher}>
+                      <FormControl fullWidth variant="outlined" error={!!errors.classTeacher.email}>
                         <InputLabel id="teacher-select-label">Select class teacher</InputLabel>
                         <Select
                           labelId="teacher-select-label"
@@ -104,12 +140,12 @@ function CreateClass() {
                           name="classTeacher"
                           label="Select class teacher"
                           sx={{ height: "44px;" }}
-                          value={values.classTeacher}
+                          value={values.classTeacher.email}
                           onChange={handleChange}
                         >
-                          <MenuItem value={1}>Umayanga Vidunwan</MenuItem>
-                          <MenuItem value={2}>Umayanga Vidunwan</MenuItem>
-                          <MenuItem value={3}>Umayanga Vidunwan</MenuItem>
+                          <MenuItem value={'teacher3@gmail.com'}>Teacher 3</MenuItem>
+                          <MenuItem value={'teacher2@gmail.com'}>Teacher 2</MenuItem>
+                          <MenuItem value={'teacher1@gmail.com'}>Teacher 1</MenuItem>
                         </Select>
                       </FormControl>
                     </MDBox>
