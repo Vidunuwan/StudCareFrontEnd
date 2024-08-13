@@ -7,4 +7,5 @@ export const API_ENDPOINTS = {
     GET_SUBJECTS: "subject/all",
     CREATE_CLASS: "class/create",
     CREATE_WARD: "ward/create",
+    GET_CLASSES: "class/all"
 };

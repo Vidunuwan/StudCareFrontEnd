@@ -36,7 +36,7 @@ export default function data() {
 
   const getClasses = async () => {
     try {
-      const response = await api.get(`${API_ENDPOINTS.GET_USERS}?role=all`);
+      const response = await api.get(API_ENDPOINTS.GET_CLASSES);
       const classes = response.data;
       return classes.data;
 
@@ -53,8 +53,8 @@ export default function data() {
       const classes = await getClasses();
 
       const mappedRows = classes.map((classe) => ({
-        name: classe.username,
-        class_teacher: <Job title={classe.role} description={classe.classTeacher ? "Class Teacher" : "No organization"} />,
+        name: classe.className,
+        class_teacher: <Job title={classe.role} description={classe.classTeacher ? classe.classTeacher.username : "No organization"} />,
         // email: (
         //   <MDBox ml={-1}>
         //     <MDBadge badgeContent={classe.email} color={classe.status === "online" ? "success" : "secondary"} variant="gradient" size="sm" />
