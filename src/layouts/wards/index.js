@@ -16,10 +16,17 @@ import DataTable from "examples/Tables/DataTable";
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Wards() {
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
+
+  const navigate = useNavigate();
+
+  const handleCreateWard = () => {
+    navigate("/wards/create-ward");
+  };
 
   return (
     <DashboardLayout>
@@ -37,7 +44,7 @@ function Wards() {
                     backgroundColor: "#388e3c", // custom hover color
                   },
                 }}
-                onClick={() => console.log("Create Subject button clicked")}
+                onClick={handleCreateWard}
                 style={{ marginLeft: "auto" }} // Adjust the styling as needed
               >
                 Create Ward

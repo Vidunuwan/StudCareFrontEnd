@@ -36,6 +36,7 @@ import CreateClass from "layouts/classes/CreateClass";
 import Icon from "@mui/material/Icon";
 import UserManagement from "layouts/user-management";
 import CreateUser from "layouts/user-management/CreateUser";
+import CreateWard from "layouts/wards/createWard";
 
 const authUser = JSON.parse(localStorage.getItem('authUser'));
 const userRole = authUser?.role || "";
@@ -71,6 +72,13 @@ const allRoutes = [
     icon: <Icon fontSize="small">hotel</Icon>,
     route: "/wards",
     component: <Wards />,
+  },
+  {
+    type: "",
+    name: "Create Ward",
+    key: "create-ward",
+    route: "/wards/create-ward",
+    component: <CreateWard />,
   },
   {
     type: "collapse",

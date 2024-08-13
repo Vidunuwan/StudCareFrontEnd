@@ -5,5 +5,6 @@ export const API_ENDPOINTS = {
     CREATE_USERS: '/account/create',
     GET_USERS: 'user/all',
     GET_SUBJECTS: "subject/all",
-    CREATE_CLASS: "class/create"
+    CREATE_CLASS: "class/create",
+    CREATE_WARD: "ward/create",
 };

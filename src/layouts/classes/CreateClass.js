@@ -20,6 +20,7 @@ import { useState } from "react";
 import { Password } from "@mui/icons-material";
 import api from "api/api";
 import { API_ENDPOINTS } from "api/endpoints";
+import Swal from 'sweetalert2'
 
 
 function CreateClass() {
@@ -64,6 +65,14 @@ function CreateClass() {
     }
     setErrors(newErrors);
     return isValid;
+  };
+
+  const showAlert = () => {
+    Swal.fire({
+      title: 'Success!',
+      text: 'Class created success',
+      icon: 'success',
+    })
   };
 
   const handleSubmit = async (event) => {
