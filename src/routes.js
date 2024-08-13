@@ -38,6 +38,7 @@ import CreateUser from "layouts/user-management/CreateUser";
 import CreateWard from "layouts/wards/createWard";
 import CreateSuject from "layouts/subjects/CreateSubject";
 import AdminDashboard from "layouts/dashboard/AdminDashboard";
+import StudentDashboard from "layouts/dashboard/StudentDashboard";
 
 const authUser = JSON.parse(localStorage.getItem('authUser'));
 const userRole = authUser?.role || "";
@@ -204,7 +205,7 @@ const studentsRoutes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <AdminDashboard />,
+    component: <StudentDashboard />,
   },
   {
     type: "collapse",
