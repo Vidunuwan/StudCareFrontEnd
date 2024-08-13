@@ -39,6 +39,9 @@ import CreateWard from "layouts/wards/createWard";
 import CreateSuject from "layouts/subjects/CreateSubject";
 import AdminDashboard from "layouts/dashboard/AdminDashboard";
 import StudentDashboard from "layouts/dashboard/StudentDashboard";
+import StudentClass from "layouts/classes/studentIndex";
+import StudentWard from "layouts/wards/studetIndex";
+import StudentSubject from "layouts/subjects/StudentIndex";
 
 const authUser = JSON.parse(localStorage.getItem('authUser'));
 const userRole = authUser?.role || "";
@@ -209,19 +212,19 @@ const studentsRoutes = [
   },
   {
     type: "collapse",
-    name: "Classes",
-    key: "classes",
+    name: "Class",
+    key: "class",
     icon: <Icon fontSize="small">school</Icon>,
-    route: "/classes",
-    component: <Classes />,
+    route: "/class",
+    component: <StudentClass />,
   },
   {
     type: "collapse",
-    name: "Wards",
-    key: "wards",
+    name: "Ward",
+    key: "ward",
     icon: <Icon fontSize="small">hotel</Icon>,
-    route: "/wards",
-    component: <Wards />,
+    route: "/ward",
+    component: <StudentWard />,
   },
   {
     type: "collapse",
@@ -229,7 +232,7 @@ const studentsRoutes = [
     key: "subjects",
     icon: <Icon fontSize="small">science</Icon>,
     route: "/subjects",
-    component: <Subjects />,
+    component: <StudentSubject />,
   },
   {
     type: "collapse",
