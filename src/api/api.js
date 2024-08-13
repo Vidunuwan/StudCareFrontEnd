@@ -2,7 +2,7 @@ import { error } from "ajv/dist/vocabularies/applicator/dependencies";
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://20.41.86.240:9090",
+    baseURL: "http://studcare.koreacentral.cloudapp.azure.com:9090",
     timeout: 10000,
 });
 

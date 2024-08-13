@@ -30,15 +30,14 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import studentsTableData from "layouts/user-management/data/studentsTableData";
+import usersTableData from "layouts/user-management/data/usersTableData";
 import teachersTableData from "layouts/user-management/data/teachersTableData";
 
 import { useNavigate } from "react-router-dom";
 
 
 function UserManagement() {
-  const { columns, rows } = studentsTableData();
-  const { columns: pColumns, rows: pRows } = teachersTableData();
+  const { columns, rows } = usersTableData();
 
   const navigate = useNavigate();
   const handleCreateUser = () => {
@@ -81,7 +80,7 @@ function UserManagement() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Students
+                  Users
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
@@ -95,36 +94,8 @@ function UserManagement() {
               </MDBox>
             </Card>
           </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Teachers
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: pColumns, rows: pRows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid>
         </Grid>
       </MDBox>
-      <Footer />
     </DashboardLayout>
   );
 }
