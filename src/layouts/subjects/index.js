@@ -15,9 +15,17 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 import subjectTableData from "./data/subjectTableData";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
 
 function Subjects() {
   const { columns, rows } = subjectTableData();
+
+  const navigate = useNavigate();
+
+  const handleCreateClass = () => {
+    navigate("/subjects/create-subject");
+  };
 
   return (
     <DashboardLayout>
@@ -35,7 +43,7 @@ function Subjects() {
                     backgroundColor: "#388e3c", // custom hover color
                   },
                 }}
-                onClick={() => console.log("Create Subject button clicked")}
+                onClick={handleCreateClass}
                 style={{ marginLeft: "auto" }} // Adjust the styling as needed
               >
                 Create Subject

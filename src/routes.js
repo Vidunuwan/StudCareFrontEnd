@@ -37,6 +37,7 @@ import Icon from "@mui/material/Icon";
 import UserManagement from "layouts/user-management";
 import CreateUser from "layouts/user-management/CreateUser";
 import CreateWard from "layouts/wards/createWard";
+import CreateSuject from "layouts/subjects/CreateSubject";
 
 const authUser = JSON.parse(localStorage.getItem('authUser'));
 const userRole = authUser?.role || "";
@@ -87,6 +88,14 @@ const allRoutes = [
     icon: <Icon fontSize="small">science</Icon>,
     route: "/subjects",
     component: <Subjects />,
+  },
+  {
+    type: "",
+    name: "Create Subjects",
+    key: "create-subjects",
+    icon: <Icon fontSize="small">science</Icon>,
+    route: "/subjects/create-subject",
+    component: <CreateSuject />,
   },
   {
     type: "collapse",

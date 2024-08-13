@@ -8,5 +8,6 @@ export const API_ENDPOINTS = {
     CREATE_CLASS: "class/create",
     CREATE_WARD: "ward/create",
     GET_CLASSES: "class/all",
-    GET_SUBJECTS: "subject/all"
+    GET_SUBJECTS: "subject/all",
+    CREATE_SUBJECT: "subject/create"
 };
