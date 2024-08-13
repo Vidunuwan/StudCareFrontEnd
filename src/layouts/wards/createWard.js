@@ -145,7 +145,7 @@ function CreateWard() {
                                 textAlign="center"
                             >
                                 <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
-                                    Create Class
+                                    Create Ward
                                 </MDTypography>
                             </MDBox>
                             <MDBox pt={4} pb={3} px={3}>

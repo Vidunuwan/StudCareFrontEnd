@@ -13,14 +13,14 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
+import wardsTableData from "./data/wardsTableData";
+
 import projectsTableData from "layouts/tables/data/projectsTableData";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function Wards() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
+  const { columns, rows } = wardsTableData();
 
   const navigate = useNavigate();
 
@@ -64,7 +64,7 @@ function Wards() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  List of Classes
+                  List of Wards
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
