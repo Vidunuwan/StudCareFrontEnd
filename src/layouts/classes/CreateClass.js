@@ -16,7 +16,7 @@ import projectsTableData from "layouts/tables/data/projectsTableData";
 import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Password } from "@mui/icons-material";
 import api from "api/api";
 import { API_ENDPOINTS } from "api/endpoints";
@@ -104,6 +104,27 @@ function CreateClass() {
     }
   };
 
+  const getTeachers = async () => {
+    try {
+      const response = await api.get(`${API_ENDPOINTS.GET_USERS}?role=TEACHER`);
+      const teachers = response.data;
+      return teachers.data;
+
+    } catch (error) {
+      return [];
+    }
+  };
+
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    async function fetchItems() {
+      const teachers = await getTeachers();
+      setItems(teachers);
+    }
+    fetchItems();
+  }, []);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -152,9 +173,9 @@ function CreateClass() {
                           value={values.classTeacher.email}
                           onChange={handleChange}
                         >
-                          <MenuItem value={'teacher3@gmail.com'}>Teacher 3</MenuItem>
-                          <MenuItem value={'teacher2@gmail.com'}>Teacher 2</MenuItem>
-                          <MenuItem value={'teacher1@gmail.com'}>Teacher 1</MenuItem>
+                          {items.map((item) => (
+                            <MenuItem key={item.email} value={item.email}>{item.username}</MenuItem>
+                          ))}
                         </Select>
                       </FormControl>
                     </MDBox>
