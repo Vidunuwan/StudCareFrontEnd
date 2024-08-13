@@ -104,7 +104,7 @@ function CreateMarks() {
                                 textAlign="center"
                             >
                                 <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
-                                    {subjectName} : {subjectClass}
+                                    SUBJECT : {subjectName.toUpperCase()} | CLASS : {subjectClass}
                                 </MDTypography>
                             </MDBox>
                             <MDBox pt={4} pb={3} px={3}>
