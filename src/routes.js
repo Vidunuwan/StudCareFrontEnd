@@ -1,20 +1,4 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 /** 
-  All of the routes for the Material Dashboard 2 React are added here,
   You can add a new route, customize the routes and delete the routes here.
 
   Once you add a new route on this file it will be visible automatically on
@@ -35,8 +19,6 @@ Coded by www.creative-tim.com
   10. The `component` key is used to store the component of its route.
 */
 
-// Material Dashboard 2 React layouts
-import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
@@ -44,42 +26,162 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import Classes from "layouts/classes";
+import Wards from "layouts/wards";
+import Subjects from "layouts/subjects";
+import CreateClass from "layouts/classes/CreateClass";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import UserManagement from "layouts/user-management";
+import CreateUser from "layouts/user-management/CreateUser";
+import CreateWard from "layouts/wards/createWard";
+import CreateSuject from "layouts/subjects/CreateSubject";
+import AdminDashboard from "layouts/dashboard/AdminDashboard";
+import StudentDashboard from "layouts/dashboard/StudentDashboard";
+import StudentClass from "layouts/classes/studentIndex";
+import StudentWard from "layouts/wards/studetIndex";
+import StudentSubject from "layouts/subjects/StudentIndex";
 
-const routes = [
+const authUser = JSON.parse(localStorage.getItem('authUser'));
+const userRole = authUser?.role || "";
+
+const allRoutes = [
   {
     type: "collapse",
     name: "Dashboard",
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+    component: <AdminDashboard />,
   },
   {
     type: "collapse",
-    name: "Tables",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
+    name: "Classes",
+    key: "classes",
+    icon: <Icon fontSize="small">school</Icon>,
+    route: "/classes",
+    component: <Classes />,
+  },
+  {
+    type: "",
+    name: "Create Class",
+    key: "create-class",
+    route: "/classes/create-class",
+    component: <CreateClass />,
   },
   {
     type: "collapse",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: <Billing />,
+    name: "Wards",
+    key: "wards",
+    icon: <Icon fontSize="small">hotel</Icon>,
+    route: "/wards",
+    component: <Wards />,
+  },
+  {
+    type: "",
+    name: "Create Ward",
+    key: "create-ward",
+    route: "/wards/create-ward",
+    component: <CreateWard />,
   },
   {
     type: "collapse",
-    name: "RTL",
-    key: "rtl",
-    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-    route: "/rtl",
-    component: <RTL />,
+    name: "Subjects",
+    key: "subjects",
+    icon: <Icon fontSize="small">science</Icon>,
+    route: "/subjects",
+    component: <Subjects />,
+  },
+  {
+    type: "",
+    name: "Create Subjects",
+    key: "create-subjects",
+    icon: <Icon fontSize="small">science</Icon>,
+    route: "/subjects/create-subject",
+    component: <CreateSuject />,
+  },
+  {
+    type: "collapse",
+    name: "User Management",
+    key: "user-management",
+    icon: <Icon fontSize="small">group</Icon>,
+    route: "/user-management",
+    component: <UserManagement />,
+  },
+  {
+    type: "",
+    name: "Create User",
+    key: "create-user",
+    route: "/user-management/create-user",
+    component: <CreateUser />,
+  },
+  // {
+  //   type: "collapse",
+  //   name: "Billing",
+  //   key: "billing",
+  //   icon: <Icon fontSize="small">receipt_long</Icon>,
+  //   route: "/billing",
+  //   component: <Billing />,
+  // },
+  {
+    type: "collapse",
+    name: "Notifications",
+    key: "notifications",
+    icon: <Icon fontSize="small">notifications</Icon>,
+    route: "/notifications",
+    component: <Notifications />,
+  },
+  {
+    type: "collapse",
+    name: "My Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile",
+    component: <Profile />,
+  },
+  // {
+  //   type: "collapse",
+  //   name: "Sign In",
+  //   key: "sign-in",
+  //   icon: <Icon fontSize="small">login</Icon>,
+  //   route: "/authentication/sign-in",
+  //   component: <SignIn />,
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Sign Up",
+  //   key: "sign-up",
+  //   icon: <Icon fontSize="small">assignment</Icon>,
+  //   route: "/authentication/sign-up",
+  //   component: <SignUp />,
+  // },
+];
+
+const teachersRoutes = [
+  {
+    type: "collapse",
+    name: "Dashboard",
+    key: "dashboard",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/dashboard",
+    component: <AdminDashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Classes",
+    key: "classes",
+    icon: <Icon fontSize="small">school</Icon>,
+    route: "/classes",
+    component: <Classes />,
+  },
+  {
+    type: "collapse",
+    name: "Subjects",
+    key: "subjects",
+    icon: <Icon fontSize="small">science</Icon>,
+    route: "/subjects",
+    component: <Subjects />,
   },
   {
     type: "collapse",
@@ -91,28 +193,114 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Profile",
+    name: "My Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
     component: <Profile />,
   },
+];
+
+const studentsRoutes = [
   {
     type: "collapse",
-    name: "Sign In",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
-    component: <SignIn />,
+    name: "Dashboard",
+    key: "dashboard",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/dashboard",
+    component: <StudentDashboard />,
   },
   {
     type: "collapse",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
+    name: "Class",
+    key: "class",
+    icon: <Icon fontSize="small">school</Icon>,
+    route: "/class",
+    component: <StudentClass />,
+  },
+  {
+    type: "collapse",
+    name: "Ward",
+    key: "ward",
+    icon: <Icon fontSize="small">hotel</Icon>,
+    route: "/ward",
+    component: <StudentWard />,
+  },
+  {
+    type: "collapse",
+    name: "Subjects",
+    key: "subjects",
+    icon: <Icon fontSize="small">science</Icon>,
+    route: "/subjects",
+    component: <StudentSubject />,
+  },
+  {
+    type: "collapse",
+    name: "Notifications",
+    key: "notifications",
+    icon: <Icon fontSize="small">notifications</Icon>,
+    route: "/notifications",
+    component: <Notifications />,
+  },
+  {
+    type: "collapse",
+    name: "My Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile",
+    component: <Profile />,
   },
 ];
 
+const hostelMastersRoutes = [
+  {
+    type: "collapse",
+    name: "Dashboard",
+    key: "dashboard",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/dashboard",
+    component: <AdminDashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Wards",
+    key: "wards",
+    icon: <Icon fontSize="small">hotel</Icon>,
+    route: "/wards",
+    component: <Wards />,
+  },
+  {
+    type: "collapse",
+    name: "Notifications",
+    key: "notifications",
+    icon: <Icon fontSize="small">notifications</Icon>,
+    route: "/notifications",
+    component: <Notifications />,
+  },
+  {
+    type: "collapse",
+    name: "My Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile",
+    component: <Profile />,
+  },
+];
+
+let routes = [];
+switch (userRole) {
+  case 'TEACHER':
+    routes = teachersRoutes;
+    break;
+  case 'HOSTEL_MASTER':
+    routes = hostelMastersRoutes;
+    break;
+  case 'STUDENT':
+    routes = studentsRoutes;
+    break;
+  case 'ADMINISTRATOR':
+    routes = allRoutes;
+    break;
+
+}
 export default routes;

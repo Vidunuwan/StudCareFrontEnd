@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState, useEffect } from "react";
 
 // react-router components
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate, json } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -52,6 +52,8 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
+import api from "api/api";
+import { API_ENDPOINTS } from "api/endpoints";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -123,6 +125,24 @@ function DashboardNavbar({ absolute, light, isMini }) {
     },
   });
 
+  const navigate = useNavigate();
+
+  //Log out
+  const handleLogout = async () => {
+    const authUser = JSON.parse(localStorage.getItem('authUser'));
+    try {
+
+      const responce = await api.post(`${API_ENDPOINTS.LOGOUT}/${authUser.email}`);
+      if (responce.responseCode = "SUCCESS") {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('authUser');
+        navigate("/authentication/sign-in");
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
+  }
+
   return (
     <AppBar
       position={absolute ? "absolute" : navbarType}
@@ -177,6 +197,19 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 <Icon sx={iconsStyle}>notifications</Icon>
               </IconButton>
               {renderMenu()}
+              <IconButton
+                size="small"
+                disableRipple
+                color="inherit"
+                sx={navbarIconButton}
+                aria-controls="notification-menu"
+                aria-haspopup="true"
+                variant="contained"
+                onClick={handleLogout}
+              >
+                <Icon sx={iconsStyle}>power_settings_new</Icon>
+
+              </IconButton>
             </MDBox>
           </MDBox>
         )}

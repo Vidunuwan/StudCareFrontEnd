@@ -37,21 +37,59 @@ import MDButton from "components/MDButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
+import CoverLayout from "../components/CoverLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/bg-sign-in-basic2.jpg";
+import { Password } from "@mui/icons-material";
+import axios from "axios";
+import { API_ENDPOINTS } from "api/endpoints";
+import api from "api/api";
+import { useNavigate } from "react-router-dom";
 
-function Basic() {
+function SingIn() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: ""
+  });
+
+  const navigate = useNavigate();
+
+  const [loginError, setLoginError] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials({ ...credentials, [name]: value });
+  };
+
+  const handleLogin = async () => {
+    try {
+      const response = await api.post(API_ENDPOINTS.LOGIN, credentials);
+      const data = response.data;
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);
+        localStorage.setItem('authUser', JSON.stringify(data.user));
+        setLoginError(null);
+        navigate("/dashboard");
+      } else {
+        setLoginError("Login Fail");
+      }
+    } catch (error) {
+      // setLoginError(error.message);
+      setLoginError("Login Fail");
+    }
+  };
 
   return (
     <BasicLayout image={bgImage}>
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="#4caf50"
           borderRadius="lg"
           coloredShadow="info"
           mx={2}
@@ -59,11 +97,15 @@ function Basic() {
           p={2}
           mb={1}
           textAlign="center"
+          sx={{
+            backgroundColor: "#4caf50", // custom background color
+          }}
         >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Sign in
+          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}
+          >
+            STUD CARE
           </MDTypography>
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
+          {/* <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
             <Grid item xs={2}>
               <MDTypography component={MuiLink} href="#" variant="body1" color="white">
                 <FacebookIcon color="inherit" />
@@ -79,16 +121,30 @@ function Basic() {
                 <GoogleIcon color="inherit" />
               </MDTypography>
             </Grid>
-          </Grid>
+          </Grid> */}
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput type="email" label="Email" name="email" fullWidth onChange={handleChange} />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput type="password" label="Password" name="password" fullWidth onChange={handleChange} />
             </MDBox>
+            {loginError &&
+              <MDBox mb={2}
+                style={{
+                  color: 'red',
+                  backgroundColor: '#ffe6e6',
+                  padding: '10px',
+                  borderRadius: '4px',
+                  fontWeight: 'bold',
+                  fontSize: '0.875rem', // small font size
+                  textAlign: 'center'
+                }}>
+                {loginError}
+              </MDBox>
+            }
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
               <MDTypography
@@ -102,23 +158,30 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient"
+                sx={{
+                  backgroundColor: "#4caf50", // custom background color
+                  color: "#ffffff", // custom text color
+                  "&:hover": {
+                    backgroundColor: "#388e3c", // custom hover color
+                  },
+                }} fullWidth onClick={handleLogin}>
                 sign in
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Don&apos;t have an account?{" "}
-                <MDTypography
-                  component={Link}
-                  to="/authentication/sign-up"
+                <MDBox
+                  // to="/authentication/sign-up"
                   variant="button"
                   color="info"
                   fontWeight="medium"
                   textGradient
+
                 >
-                  Sign up
-                </MDTypography>
+                  Please contact admin
+                </MDBox>
               </MDTypography>
             </MDBox>
           </MDBox>
@@ -127,5 +190,4 @@ function Basic() {
     </BasicLayout>
   );
 }
-
-export default Basic;
+export default SingIn;
