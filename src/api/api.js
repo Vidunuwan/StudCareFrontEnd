@@ -25,7 +25,7 @@ api.interceptors.response.use(
     error => {
         if (error.response.status === 401) {
             // Redirect to login page or refresh token logic
-            window.location.href = '/login';
+            window.location.href = '/authentication/sign-in';
             console.log("403");
         }
         return Promise.reject(error);
