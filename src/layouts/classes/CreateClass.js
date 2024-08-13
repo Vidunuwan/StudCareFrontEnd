@@ -174,7 +174,7 @@ function CreateClass() {
                           onChange={handleChange}
                         >
                           {items.map((item) => (
-                            <MenuItem key={item.email} value={item.email}>{item.username}</MenuItem>
+                            !item.classTeacher && <MenuItem key={item.email} value={item.email}>{item.username}</MenuItem>
                           ))}
                         </Select>
                       </FormControl>

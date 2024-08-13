@@ -16,7 +16,7 @@ import projectsTableData from "layouts/tables/data/projectsTableData";
 import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Password } from "@mui/icons-material";
 import api from "api/api";
 import { API_ENDPOINTS } from "api/endpoints";
@@ -105,6 +105,27 @@ function CreateWard() {
         }
     };
 
+    const getWardens = async () => {
+        try {
+            const response = await api.get(`${API_ENDPOINTS.GET_USERS}?role=HOSTEL_MASTER`);
+            const teachers = response.data;
+            return teachers.data;
+
+        } catch (error) {
+            return [];
+        }
+    };
+
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        async function fetchItems() {
+            const wardens = await getWardens();
+            setItems(wardens);
+        }
+        fetchItems();
+    }, []);
+
     return (
         <DashboardLayout>
             <DashboardNavbar />
@@ -153,9 +174,9 @@ function CreateWard() {
                                                     value={values.hostelMaster.email}
                                                     onChange={handleChange}
                                                 >
-                                                    <MenuItem value={'warden1@gmail.com'}>Warden 1</MenuItem>
-                                                    <MenuItem value={'warden2@gmail.com'}>Warden 2</MenuItem>
-                                                    <MenuItem value={'warden3@gmail.com'}>Warden 3</MenuItem>
+                                                    {items.map((item) => (
+                                                        <MenuItem key={item.email} value={item.email}>{item.username}</MenuItem>
+                                                    ))}
                                                 </Select>
                                             </FormControl>
                                         </MDBox>
