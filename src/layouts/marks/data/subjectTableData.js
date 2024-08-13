@@ -29,10 +29,13 @@ import team4 from "assets/images/team-4.jpg";
 import { useEffect, useState } from "react";
 import api from "api/api";
 import { API_ENDPOINTS } from "api/endpoints";
+import { useNavigate } from "react-router-dom";
 
 export default function data() {
 
   const [rows, setRows] = useState([]);
+
+  const navigate = useNavigate();
 
   const getSubjects = async () => {
     try {
@@ -43,7 +46,16 @@ export default function data() {
     } catch (error) {
       console.log(error);
 
-      return [];
+      return [
+        {
+          subjectName: "Maths",
+          class: "12A",
+
+        }, {
+          subjectName: "SCience",
+          class: "8B",
+        }
+      ];
     }
   };
 
@@ -54,15 +66,13 @@ export default function data() {
 
       const mappedRows = subjects.map((subject) => ({
         name: subject.subjectName.toUpperCase(),
-        // class_teacher: <Job title={classe.role} description={classe.classTeacher ? classe.classTeacher.username : "No organization"} />,
-        // email: (
-        //   <MDBox ml={-1}>
-        //     <MDBadge badgeContent={classe.email} color={classe.status === "online" ? "success" : "secondary"} variant="gradient" size="sm" />
-        //   </MDBox>
-        // ),
+        class: <Job title={subject.class} />,
         action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium"
+
+            onClick={() => navigate(`/marks/create-marks?subject=${subject.subjectName}&class=${subject.class}`)}
+          >
+            Set Mark
           </MDTypography>
         ),
       }));
@@ -97,7 +107,7 @@ export default function data() {
   return {
     columns: [
       { Header: "name", accessor: "name", width: "45%", align: "left" },
-      // { Header: "class_teacher", accessor: "class_teacher", align: "left" },
+      { Header: "class", accessor: "class", align: "left" },
       { Header: "action", accessor: "action", align: "center" },
     ],
     rows: rows,

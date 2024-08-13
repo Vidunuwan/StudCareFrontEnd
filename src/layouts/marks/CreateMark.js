@@ -18,9 +18,15 @@ import MDInput from "components/MDInput";
 import { useState } from "react";
 import api from "api/api";
 import { API_ENDPOINTS } from "api/endpoints";
+import { useLocation } from "react-router-dom";
 
 
 function CreateMarks() {
+
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const subjectName = searchParams.get("subject");
+    const subjectClass = searchParams.get("class");
 
     const showAlert = () => {
         Swal.fire({
@@ -98,7 +104,7 @@ function CreateMarks() {
                                 textAlign="center"
                             >
                                 <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
-                                    Create Mark Sheet
+                                    {subjectName} : {subjectClass}
                                 </MDTypography>
                             </MDBox>
                             <MDBox pt={4} pb={3} px={3}>
@@ -106,12 +112,23 @@ function CreateMarks() {
                                     <MDBox display="flex" justifyContent="center" alignItems="center">
                                         <MDBox m={1} pb={2} width={"25%"}>
                                             <MDInput
-                                                error={!!errors.subjectName}
+                                                error={!!errors.academicYear}
                                                 type="text"
-                                                label="Subject Name"
-                                                name="subjectName"
+                                                label="Academic Year"
+                                                name="academicYear"
                                                 fullWidth
-                                                value={values.subjectName}
+                                                value={values.academicYear}
+                                                onChange={handleChange}
+                                            />
+                                        </MDBox>
+                                        <MDBox m={1} pb={2} width={"25%"}>
+                                            <MDInput
+                                                error={!!errors.termNumber}
+                                                type="number"
+                                                label="Term Number"
+                                                name="termNumber"
+                                                fullWidth
+                                                value={values.termNumber}
                                                 onChange={handleChange}
                                             />
                                         </MDBox>
