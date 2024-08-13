@@ -13,14 +13,13 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import classTableData from "./data/classTableData";
+
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function Classes() {
-  const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
+  const { columns, rows } = classTableData();
   const navigate = useNavigate();
 
   const handleCreateClass = () => {
