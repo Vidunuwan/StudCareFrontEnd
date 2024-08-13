@@ -37,7 +37,10 @@ import Icon from "@mui/material/Icon";
 import UserManagement from "layouts/user-management";
 import CreateUser from "layouts/user-management/CreateUser";
 
-const routes = [
+const authUser = JSON.parse(localStorage.getItem('authUser'));
+const userRole = authUser?.role || "";
+
+const allRoutes = [
   {
     type: "collapse",
     name: "Dashboard",
@@ -134,4 +137,149 @@ const routes = [
   // },
 ];
 
+const teachersRoutes = [
+  {
+    type: "collapse",
+    name: "Dashboard",
+    key: "dashboard",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/dashboard",
+    component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Classes",
+    key: "classes",
+    icon: <Icon fontSize="small">school</Icon>,
+    route: "/classes",
+    component: <Classes />,
+  },
+  {
+    type: "collapse",
+    name: "Subjects",
+    key: "subjects",
+    icon: <Icon fontSize="small">science</Icon>,
+    route: "/subjects",
+    component: <Subjects />,
+  },
+  {
+    type: "collapse",
+    name: "Notifications",
+    key: "notifications",
+    icon: <Icon fontSize="small">notifications</Icon>,
+    route: "/notifications",
+    component: <Notifications />,
+  },
+  {
+    type: "collapse",
+    name: "My Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile",
+    component: <Profile />,
+  },
+];
+
+const studentsRoutes = [
+  {
+    type: "collapse",
+    name: "Dashboard",
+    key: "dashboard",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/dashboard",
+    component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Classes",
+    key: "classes",
+    icon: <Icon fontSize="small">school</Icon>,
+    route: "/classes",
+    component: <Classes />,
+  },
+  {
+    type: "collapse",
+    name: "Wards",
+    key: "wards",
+    icon: <Icon fontSize="small">hotel</Icon>,
+    route: "/wards",
+    component: <Wards />,
+  },
+  {
+    type: "collapse",
+    name: "Subjects",
+    key: "subjects",
+    icon: <Icon fontSize="small">science</Icon>,
+    route: "/subjects",
+    component: <Subjects />,
+  },
+  {
+    type: "collapse",
+    name: "Notifications",
+    key: "notifications",
+    icon: <Icon fontSize="small">notifications</Icon>,
+    route: "/notifications",
+    component: <Notifications />,
+  },
+  {
+    type: "collapse",
+    name: "My Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile",
+    component: <Profile />,
+  },
+];
+
+const hostelMastersRoutes = [
+  {
+    type: "collapse",
+    name: "Dashboard",
+    key: "dashboard",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/dashboard",
+    component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Wards",
+    key: "wards",
+    icon: <Icon fontSize="small">hotel</Icon>,
+    route: "/wards",
+    component: <Wards />,
+  },
+  {
+    type: "collapse",
+    name: "Notifications",
+    key: "notifications",
+    icon: <Icon fontSize="small">notifications</Icon>,
+    route: "/notifications",
+    component: <Notifications />,
+  },
+  {
+    type: "collapse",
+    name: "My Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile",
+    component: <Profile />,
+  },
+];
+
+let routes = [];
+switch (userRole) {
+  case 'TEACHER':
+    routes = teachersRoutes;
+    break;
+  case 'HOSTEL_MASTER':
+    routes = hostelMastersRoutes;
+    break;
+  case 'STUDENT':
+    routes = studentsRoutes;
+    break;
+  case 'ADMINISTRATOR':
+    routes = allRoutes;
+    break;
+
+}
 export default routes;
