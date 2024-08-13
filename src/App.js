@@ -28,7 +28,7 @@ import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
 import Sidenav from "examples/Sidenav";
-import Configurator from "examples/Configurator";
+// import Configurator from "examples/Configurator";
 
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
@@ -168,11 +168,11 @@ export default function App() {
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
             />
-            <Configurator />
-            {configsButton}
+            {/* <Configurator /> */}
+            {/* {configsButton} */}
           </>
         )}
-        {layout === "vr" && <Configurator />}
+        {/* {layout === "vr" && <Configurator />} */}
         <Routes>
           {isAuthenticated() ? (
             <>
@@ -202,11 +202,11 @@ export default function App() {
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
-          <Configurator />
-          {configsButton}
+          {/* <Configurator /> */}
+          {/* {configsButton} */}
         </>
       )}
-      {layout === "vr" && <Configurator />}
+      {/* {layout === "vr" && <Configurator />} */}
       <Routes>
         {isAuthenticated() ? (
           <>

@@ -121,22 +121,6 @@ const allRoutes = [
     route: "/user-management/create-user",
     component: <CreateUser />,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Billing",
-  //   key: "billing",
-  //   icon: <Icon fontSize="small">receipt_long</Icon>,
-  //   route: "/billing",
-  //   component: <Billing />,
-  // },
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
-  },
   {
     type: "collapse",
     name: "My Profile",
@@ -145,22 +129,6 @@ const allRoutes = [
     route: "/profile",
     component: <Profile />,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Sign In",
-  //   key: "sign-in",
-  //   icon: <Icon fontSize="small">login</Icon>,
-  //   route: "/authentication/sign-in",
-  //   component: <SignIn />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Sign Up",
-  //   key: "sign-up",
-  //   icon: <Icon fontSize="small">assignment</Icon>,
-  //   route: "/authentication/sign-up",
-  //   component: <SignUp />,
-  // },
 ];
 
 const teachersRoutes = [
@@ -203,14 +171,6 @@ const teachersRoutes = [
     icon: <Icon fontSize="small">star</Icon>,
     route: "marks/create-marks",
     component: <CreateMarks />,
-  },
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
   },
   {
     type: "collapse",
@@ -257,14 +217,6 @@ const studentsRoutes = [
   },
   {
     type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
-  },
-  {
-    type: "collapse",
     name: "My Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
@@ -289,14 +241,6 @@ const hostelMastersRoutes = [
     icon: <Icon fontSize="small">hotel</Icon>,
     route: "/wards",
     component: <Wards />,
-  },
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
   },
   {
     type: "collapse",
