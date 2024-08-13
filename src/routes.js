@@ -43,6 +43,10 @@ import StudentClass from "layouts/classes/studentIndex";
 import StudentWard from "layouts/wards/studetIndex";
 import StudentSubject from "layouts/subjects/StudentIndex";
 import TeacherDashboard from "layouts/dashboard/TeacherDashboard";
+import TeacherClass from "layouts/classes/TeacherIndex";
+import TeacherSubject from "layouts/subjects/TeacherIndex";
+import Marks from "layouts/marks";
+import CreateMarks from "layouts/marks/CreateMark";
 
 const authUser = JSON.parse(localStorage.getItem('authUser'));
 const userRole = authUser?.role || "";
@@ -174,7 +178,7 @@ const teachersRoutes = [
     key: "classes",
     icon: <Icon fontSize="small">school</Icon>,
     route: "/classes",
-    component: <Classes />,
+    component: <TeacherClass />,
   },
   {
     type: "collapse",
@@ -182,7 +186,23 @@ const teachersRoutes = [
     key: "subjects",
     icon: <Icon fontSize="small">science</Icon>,
     route: "/subjects",
-    component: <Subjects />,
+    component: <TeacherSubject />,
+  },
+  {
+    type: "collapse",
+    name: "Marks",
+    key: "marks",
+    icon: <Icon fontSize="small">star</Icon>,
+    route: "/marks",
+    component: <Marks />,
+  },
+  {
+    type: "",
+    name: "Create Marks",
+    key: "create-marks",
+    icon: <Icon fontSize="small">star</Icon>,
+    route: "marks/create-marks",
+    component: <CreateMarks />,
   },
   {
     type: "collapse",
