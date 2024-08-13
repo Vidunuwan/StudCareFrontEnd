@@ -15,7 +15,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "api/api";
 import { API_ENDPOINTS } from "api/endpoints";
 import { useLocation } from "react-router-dom";
@@ -85,6 +85,26 @@ function CreateMarks() {
             console.log("Error", errors);
         }
     };
+
+    const getClassStudents = async () => {
+        const response = await api.get(`class/${subjectClass}/students`);
+        return response.data.data;
+    };
+
+    const [students, setStudents] = useState([]);
+
+    useEffect(() => {
+        async function fetchStudents() {
+            const studentData = await getClassStudents();
+            console.log(studentData);
+
+            setStudents(studentData);
+        }
+        fetchStudents();
+    }, [])
+
+    getClassStudents();
+
     return (
         <DashboardLayout>
             <DashboardNavbar />
@@ -133,6 +153,35 @@ function CreateMarks() {
                                             />
                                         </MDBox>
                                     </MDBox>
+                                    {students.map((student, index) => (
+                                        <MDBox key={index} display="flex" justifyContent="center" alignItems="center">
+                                            <MDBox justifyContent="center" alignItems="center" sx={{ fontSize: '11pt' }}>
+                                                {student.user.username} :
+                                            </MDBox>
+                                            <MDBox m={1} pb={2} width={"25%"}>
+                                                <MDInput
+                                                    // error={!!errors.termNumber}
+                                                    type="number"
+                                                    label="Mark"
+                                                    name="mark"
+                                                    fullWidth
+                                                // value={values.termNumber}
+                                                // onChange={handleChange}
+                                                />
+                                            </MDBox>
+                                            <MDBox m={1} pb={2} width={"25%"}>
+                                                <MDInput
+                                                    // error={!!errors.termNumber}
+                                                    type="text"
+                                                    label="Grade"
+                                                    name="grade"
+                                                    fullWidth
+                                                // value={values.termNumber}
+                                                // onChange={handleChange}
+                                                />
+                                            </MDBox>
+                                        </MDBox>
+                                    ))}
                                     <MDBox m={1} pb={2} display="flex" justifyContent="end">
                                         <Button
                                             variant="contained"
