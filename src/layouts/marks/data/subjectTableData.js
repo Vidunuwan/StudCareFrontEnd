@@ -37,10 +37,13 @@ export default function data() {
 
   const navigate = useNavigate();
 
+  const authUser = JSON.parse(localStorage.getItem('authUser'));
+
   const getSubjects = async () => {
     try {
-      const response = await api.get(API_ENDPOINTS.GET_SUBJECTS);
+      const response = await api.get(`teacher/teacher1@gmail.com/subjects`);
       const subjects = response.data;
+
       return subjects.data;
 
     } catch (error) {
@@ -62,15 +65,16 @@ export default function data() {
   useEffect(() => {
 
     const fetchAndSetUsers = async () => {
-      const subjects = await getSubjects();
 
-      const mappedRows = subjects.map((subject) => ({
-        name: subject.subjectName.toUpperCase(),
-        class: <Job title={subject.class} />,
+      const subjects = await getSubjects();
+      const convertedData = convertData(subjects);
+
+      const mappedRows = convertedData.map((subject) => ({
+        name: subject.subject.subjectName.toUpperCase(),
+        class: <Job title={subject.class.className} />,
         action: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium"
-
-            onClick={() => navigate(`/marks/create-marks?subject=${subject.subjectName}&class=${subject.class}`)}
+            onClick={() => navigate(`/marks/create-marks?subject=${subject.subject.subjectName}&class=${subject.class.className}`)}
           >
             Set Mark
           </MDTypography>
@@ -81,6 +85,20 @@ export default function data() {
 
     fetchAndSetUsers();
   }, []);
+
+  function convertData(input) {
+    const output = [];
+    input.forEach(subject => {
+      subject.classes.forEach(classe => {
+        const item = {
+          'subject': subject.subject,
+          'class': classe
+        };
+        output.push(item);
+      });
+    });
+    return output;
+  }
 
 
   const Author = ({ image, name, email }) => (

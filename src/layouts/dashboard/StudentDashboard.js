@@ -81,23 +81,23 @@ function StudentDashboard() {
 
     useEffect(() => {
 
-        if (!isLoggingIn) {
+        // Handle the redirect response
+        userAgent.handleRedirectCallback((error, response) => {
+            if (error) {
+                console.log("Redirect error:", error);
+            } else {
+                console.log("login success...");
+                acquireAccessoken(response.account);
+            }
+        });
 
-            setIsLoggingIn(true);
-            userAgent.loginPopup(requestScopesPowerBi)
-                .then((loginResponse) => {
-                    console.log("login success...");
-
-                    console.log("This is user Account name got from agent call", loginResponse.account.userName)
-                    acquireAccessoken();
-                })
-                .catch((error) => {
-                    console.log("Login error...", error);
-                    setIsLoggingIn(false);
-                });
+        // If there's no account, initiate login
+        const account = userAgent.getAccount();
+        if (!account) {
+            userAgent.loginRedirect(requestScopesPowerBi);
+        } else {
+            acquireAccessoken(account);
         }
-
-
 
     }, []);
 
@@ -120,7 +120,7 @@ function StudentDashboard() {
             }).catch(function (error) {
                 console.log(error);
                 if (requiresInteraction(error.errorCode)) {
-                    userAgent.acquireTokenPopup(requestScopesPowerBi).then((tokenResponse) => {
+                    userAgent.acquireTokenRedirect(requestScopesPowerBi).then((tokenResponse) => {
                         console.log("Access token acquired interactively...");
                         setAccessToken(tokenResponse.accessToken);
                         fetchReport(tokenResponse.accessToken);
