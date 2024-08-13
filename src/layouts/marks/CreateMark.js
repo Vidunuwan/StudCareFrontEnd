@@ -37,11 +37,14 @@ function CreateMarks() {
     };
 
     const [values, setValues] = useState({
-        subjectName: ""
+        subjectName: subjectName,
+        academicYear: "",
+        termNumber: ""
     });
 
     const [errors, setErrors] = useState({
-        subjectName: ""
+        academicYear: "",
+        termNumber: ""
     });
 
     const handleChange = (e) => {
@@ -64,20 +67,22 @@ function CreateMarks() {
         return isValid;
     };
 
+    const authUser = JSON.parse(localStorage.getItem('authUser'));
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (validate()) {
-            const formData = values;
+            let formData = values;
+            formData['studentResults'] = studentsData;
             console.log(formData);
 
             try {
-                const response = await api.post(API_ENDPOINTS.CREATE_SUBJECT, formData);
+                const response = await api.post(`teacher/${authUser.email}/subject/result`, formData);
+                console.log(response);
                 const data = response.data;
                 console.log("Success", data);
                 showAlert();
-                setValues({
-                    subjectName: ""
-                });
+
             } catch (error) {
                 console.log("Error", error);
             }
@@ -96,14 +101,32 @@ function CreateMarks() {
     useEffect(() => {
         async function fetchStudents() {
             const studentData = await getClassStudents();
-            console.log(studentData);
-
             setStudents(studentData);
         }
         fetchStudents();
     }, [])
 
-    getClassStudents();
+    const [studentsData, setStudentsData] = useState([]);
+    useEffect(() => {
+        if (students && students.length > 0) {
+            setStudentsData(
+                students.map(student => ({
+                    studentEmail: student.user.email,
+                    marks: 0,
+                    teacherNote: "",
+                    grade: ""
+                }))
+            );
+        }
+    }, [students]);
+
+    const handleInputChange = (index, event) => {
+        const { name, value } = event.target;
+        const updatedStudents = [...studentsData];
+        console.log(updatedStudents);
+        updatedStudents[index][name] = value;
+        setStudentsData(updatedStudents);
+    };
 
     return (
         <DashboardLayout>
@@ -153,6 +176,8 @@ function CreateMarks() {
                                             />
                                         </MDBox>
                                     </MDBox>
+
+
                                     {students.map((student, index) => (
                                         <MDBox key={index} display="flex" justifyContent="center" alignItems="center">
                                             <MDBox justifyContent="center" alignItems="center" sx={{ fontSize: '11pt' }}>
@@ -163,21 +188,41 @@ function CreateMarks() {
                                                     // error={!!errors.termNumber}
                                                     type="number"
                                                     label="Mark"
-                                                    name="mark"
+                                                    name="marks"
                                                     fullWidth
-                                                // value={values.termNumber}
-                                                // onChange={handleChange}
+                                                    value={studentsData.marks}
+                                                    onChange={(e) => handleInputChange(index, e)}
                                                 />
+                                            </MDBox>
+
+                                            <MDBox m={1} pb={2} width={"25%"}>
+                                                <FormControl fullWidth variant="outlined" error={!!errors.classTeacher}>
+                                                    <InputLabel id="user-role-select-label">Select grade</InputLabel>
+                                                    <Select
+                                                        labelId="user-role-select-label"
+                                                        id="user-role-select"
+                                                        name="grade"
+                                                        label="Select grade"
+                                                        sx={{ height: "44px;" }}
+                                                        value={studentsData.grade}
+                                                        onChange={(e) => handleInputChange(index, e)}
+                                                    >
+                                                        <MenuItem value={"A"}>A</MenuItem>
+                                                        <MenuItem value={"B"}>B</MenuItem>
+                                                        <MenuItem value={"C"}>C</MenuItem>
+                                                        <MenuItem value={"F"}>F</MenuItem>
+                                                    </Select>
+                                                </FormControl>
                                             </MDBox>
                                             <MDBox m={1} pb={2} width={"25%"}>
                                                 <MDInput
                                                     // error={!!errors.termNumber}
                                                     type="text"
-                                                    label="Grade"
-                                                    name="grade"
+                                                    label="Teacher Note"
+                                                    name="teacherNote"
                                                     fullWidth
-                                                // value={values.termNumber}
-                                                // onChange={handleChange}
+                                                    value={studentsData.teacherNote}
+                                                    onChange={(e) => handleInputChange(index, e)}
                                                 />
                                             </MDBox>
                                         </MDBox>

@@ -41,7 +41,7 @@ export default function data() {
 
   const getSubjects = async () => {
     try {
-      const response = await api.get(`teacher/teacher1@gmail.com/subjects`);
+      const response = await api.get(`teacher/${authUser.email}/subjects`);
       const subjects = response.data;
 
       return subjects.data;
