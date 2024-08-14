@@ -49,6 +49,9 @@ import Marks from "layouts/marks";
 import CreateMarks from "layouts/marks/CreateMark";
 import Analysis from "layouts/analysis";
 import StudentMarks from "layouts/marks/StudentIndex";
+import WardenDashboard from "layouts/dashboard/WardenDashboard";
+import WardenWard from "layouts/wards/wardenIndex";
+import EvaluateStudents from "layouts/wards/EvaluateStudents";
 
 const authUser = JSON.parse(localStorage.getItem('authUser'));
 const userRole = authUser?.role || "";
@@ -123,14 +126,14 @@ const allRoutes = [
     route: "/user-management/create-user",
     component: <CreateUser />,
   },
-  {
-    type: "collapse",
-    name: "My Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "My Profile",
+  //   key: "profile",
+  //   icon: <Icon fontSize="small">person</Icon>,
+  //   route: "/profile",
+  //   component: <Profile />,
+  // },
 ];
 
 const teachersRoutes = [
@@ -174,14 +177,14 @@ const teachersRoutes = [
     route: "marks/create-marks",
     component: <CreateMarks />,
   },
-  {
-    type: "collapse",
-    name: "My Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "My Profile",
+  //   key: "profile",
+  //   icon: <Icon fontSize="small">person</Icon>,
+  //   route: "/profile",
+  //   component: <Profile />,
+  // },
 ];
 
 const studentsRoutes = [
@@ -233,14 +236,14 @@ const studentsRoutes = [
     route: "/analysis",
     component: <Analysis />,
   },
-  {
-    type: "collapse",
-    name: "My Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "My Profile",
+  //   key: "profile",
+  //   icon: <Icon fontSize="small">person</Icon>,
+  //   route: "/profile",
+  //   component: <Profile />,
+  // },
 ];
 
 const hostelMastersRoutes = [
@@ -250,7 +253,7 @@ const hostelMastersRoutes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <AdminDashboard />,
+    component: <WardenDashboard />,
   },
   {
     type: "collapse",
@@ -258,16 +261,24 @@ const hostelMastersRoutes = [
     key: "wards",
     icon: <Icon fontSize="small">hotel</Icon>,
     route: "/wards",
-    component: <Wards />,
+    component: <WardenWard />,
   },
   {
-    type: "collapse",
-    name: "My Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
+    type: "",
+    name: "Evaluate Students",
+    key: "evaluate-students",
+    icon: <Icon fontSize="small">hotel</Icon>,
+    route: "/wards/evaluate-students",
+    component: <EvaluateStudents />,
   },
+  // {
+  //   type: "collapse",
+  //   name: "My Profile",
+  //   key: "profile",
+  //   icon: <Icon fontSize="small">person</Icon>,
+  //   route: "/profile",
+  //   component: <Profile />,
+  // },
 ];
 
 let routes = [];
