@@ -13,13 +13,13 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import subjectTableData from "./data/subjectTableData";
+import studentSubjectTableData from "./data/studentSubjectTableData";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 
 function StudentSubject() {
-  const { columns, rows } = subjectTableData();
+  const { columns, rows } = studentSubjectTableData();
 
   const navigate = useNavigate();
 
