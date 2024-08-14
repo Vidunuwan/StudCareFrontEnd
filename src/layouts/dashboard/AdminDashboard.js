@@ -154,9 +154,8 @@ function AdminDashboard() {
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
+                  title="User Registration"
+                  // description="Last Campaign Performance"
                   chart={reportsBarChartData}
                 />
               </MDBox>
@@ -165,13 +164,12 @@ function AdminDashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="success"
-                  title="daily sales"
+                  title="Interations"
                   description={
                     <>
-                      (<strong>+15%</strong>) increase in today sales.
+                      (<strong>+15%</strong>) increase in today.
                     </>
                   }
-                  date="updated 4 min ago"
                   chart={sales}
                 />
               </MDBox>
@@ -180,9 +178,8 @@ function AdminDashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="dark"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
-                  date="just updated"
+                  title="completed Terms"
+                  description="Last Year Performance"
                   chart={tasks}
                 />
               </MDBox>
@@ -192,10 +189,10 @@ function AdminDashboard() {
         <MDBox>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8}>
-              <Projects />
+              {/* <Projects /> */}
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
+              {/* <OrdersOverview /> */}
             </Grid>
           </Grid>
         </MDBox>
