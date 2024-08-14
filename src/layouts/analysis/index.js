@@ -87,7 +87,7 @@ function Analysis() {
               <MDBox pt={3} pb={3} px={2}>
                 {prediction[0] ? (<Typography variant="h4" gutterBottom>
                   Stream: {prediction[0]?.stream}
-                </Typography>) : "Pleace wait ..."}
+                </Typography>) : "Please wait ..."}
                 <Grid container spacing={2}>
                   {prediction[0] && prediction[0].careers.map((career, index) => (
                     <Grid item xs={12} sm={6} md={4} key={index}>
