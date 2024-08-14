@@ -1,6 +1,8 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import { Accordion, AccordionSummary, AccordionDetails, Typography, CardContent, Table, TableBody, TableCell, TableHead, TableRow, CircularProgress } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -16,6 +18,8 @@ import DataTable from "examples/Tables/DataTable";
 import subjectTableData from "./data/subjectTableData";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "api/api";
 
 
 function StudentMarks() {
@@ -27,6 +31,40 @@ function StudentMarks() {
         navigate("/marks/create-marks");
     };
 
+    const [resultData, setResultData] = useState([]);
+
+    useEffect(() => {
+        async function fetchMarks() {
+            const responce = await api.get(`student/student5@gmail.com/all/results`);
+            setResultData(responce.data.data);
+        }
+        fetchMarks();
+    }, [])
+    useEffect(() => {
+        console.log(resultData[0]);
+    }, [resultData])
+
+    const [expandedYear, setExpandedYear] = useState(false);
+    const [expandedTerm, setExpandedTerm] = useState(false);
+
+    const handleYearChange = (year) => {
+        setExpandedYear(expandedYear === year ? false : year);
+    };
+
+    const handleTermChange = (term) => {
+        setExpandedTerm(expandedTerm === term ? false : term);
+    };
+
+    const getAvarage = (term) => {
+        let total = 0;
+
+        term.subjectResults.forEach(subject => {
+            total += parseInt(subject.marks);
+        });
+
+        return (total / term.subjectResults.length).toFixed(2);
+    }
+
     return (
         <DashboardLayout>
             <DashboardNavbar />
@@ -34,20 +72,7 @@ function StudentMarks() {
                 <Grid container spacing={6}>
                     <Grid item xs={12}>
                         <MDBox>
-                            {/* <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "#4caf50", // custom background color
-                  color: "#ffffff", // custom text color
-                  "&:hover": {
-                    backgroundColor: "#388e3c", // custom hover color
-                  },
-                }}
-                onClick={handleCreateClass}
-                style={{ marginLeft: "auto" }} // Adjust the styling as needed
-              >
-                Add Marks
-              </Button> */}
+                            {/* You can add any additional content here */}
                         </MDBox>
                     </Grid>
                     <Grid item xs={12}>
@@ -63,17 +88,61 @@ function StudentMarks() {
                                 coloredShadow="info"
                             >
                                 <MDTypography variant="h6" color="white">
-                                    Mark Sheet
+                                    Mark Sheets
                                 </MDTypography>
                             </MDBox>
                             <MDBox pt={3}>
-                                <DataTable
-                                    table={{ columns, rows }}
-                                    isSorted={false}
-                                    entriesPerPage={false}
-                                    showTotalEntries={false}
-                                    noEndBorder
-                                />
+                                <MDBox pl={3}>
+                                    {!resultData[0] ? "   Please wait ..." : ''}
+                                </MDBox>
+
+                                {/* Yearly Results Accordion */}
+                                {resultData[0]?.yearResults.map((year) => (
+                                    <Accordion
+                                        key={year.academicYear}
+                                        expanded={expandedYear === year.academicYear}
+                                        onChange={() => handleYearChange(year.academicYear)}
+                                    >
+                                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                            <Typography variant="h6">Year {year.academicYear}</Typography>
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <Grid container spacing={2}>
+                                                {year.termResults.map((term) => (
+                                                    <Grid item xs={12} sm={4} key={term.termNumber}>
+                                                        <Card onClick={() => handleTermChange(term.termNumber)}>
+                                                            <CardContent>
+                                                                <Typography variant="h6">Term {term.termNumber}</Typography>
+                                                                <Typography variant="body2">Average Marks: {getAvarage(term)}%</Typography>
+                                                                <CircularProgress variant="determinate" value={getAvarage(term)} />
+                                                            </CardContent>
+                                                            {expandedTerm === term.termNumber && (
+                                                                <AccordionDetails>
+                                                                    <Table>
+                                                                        <TableHead>
+                                                                            <TableRow>
+                                                                                <TableCell>Subject</TableCell>
+                                                                                <TableCell>Marks</TableCell>
+                                                                            </TableRow>
+                                                                        </TableHead>
+                                                                        <TableBody>
+                                                                            {term.subjectResults.map((subject) => (
+                                                                                <TableRow key={subject.subjectId}>
+                                                                                    <TableCell>{subject.subjectName.toUpperCase()}</TableCell>
+                                                                                    <TableCell>{subject.marks}</TableCell>
+                                                                                </TableRow>
+                                                                            ))}
+                                                                        </TableBody>
+                                                                    </Table>
+                                                                </AccordionDetails>
+                                                            )}
+                                                        </Card>
+                                                    </Grid>
+                                                ))}
+                                            </Grid>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                ))}
                             </MDBox>
                         </Card>
                     </Grid>
