@@ -47,6 +47,8 @@ import TeacherClass from "layouts/classes/TeacherIndex";
 import TeacherSubject from "layouts/subjects/TeacherIndex";
 import Marks from "layouts/marks";
 import CreateMarks from "layouts/marks/CreateMark";
+import Analysis from "layouts/analysis";
+import StudentMarks from "layouts/marks/StudentIndex";
 
 const authUser = JSON.parse(localStorage.getItem('authUser'));
 const userRole = authUser?.role || "";
@@ -214,6 +216,22 @@ const studentsRoutes = [
     icon: <Icon fontSize="small">science</Icon>,
     route: "/subjects",
     component: <StudentSubject />,
+  },
+  {
+    type: "collapse",
+    name: "Marks",
+    key: "marks",
+    icon: <Icon fontSize="small">star</Icon>,
+    route: "/marks",
+    component: <StudentMarks />,
+  },
+  {
+    type: "collapse",
+    name: "Analysis",
+    key: "analysis",
+    icon: <Icon fontSize="small">ssid_chart</Icon>,
+    route: "/analysis",
+    component: <Analysis />,
   },
   {
     type: "collapse",
