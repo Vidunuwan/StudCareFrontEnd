@@ -34,9 +34,54 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+import api from "api/api";
+import { API_ENDPOINTS } from "api/endpoints";
+import { useEffect, useState } from "react";
 
-function Dashboard() {
+function AdminDashboard() {
   const { sales, tasks } = reportsLineChartData;
+
+  const [totalUsers, setTotalUsers] = useState({
+    students: 0,
+    teachers: 0,
+    hostelMasters: 0,
+    admins: 0,
+    total: 0
+  });
+
+  const getUsers = async () => {
+    try {
+      const response = await api.get(`${API_ENDPOINTS.GET_USERS}?role=all`);
+      const users = response.data;
+      return users.data;
+
+    } catch (error) {
+      return [];
+    }
+  };
+
+  useEffect(() => {
+
+    async function calculateUsers() {
+      const users = await getUsers();
+
+      const teachers = users.filter((user) => { return user.role == "TEACHER" });
+      const students = users.filter((user) => { return user.role == "STUDENT" });
+      const hostelMasters = users.filter((user) => { return user.role == "HOSTEL_MASTER" });
+      const admins = users.filter((user) => { return user.role == "ADMINISTRATOR" });
+
+      setTotalUsers({
+        students: students.length,
+        teachers: teachers.length,
+        hostelMasters: hostelMasters.length,
+        admins: admins.length,
+        total: users.length
+      });
+
+    }
+
+    calculateUsers();
+  }, [])
 
   return (
     <DashboardLayout>
@@ -46,14 +91,14 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="Bookings"
-                count={281}
+                color="primary"
+                icon="person_add"
+                title="Total Users"
+                count={totalUsers.total}
                 percentage={{
                   color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  amount: "",
+                  label: `With ${totalUsers.admins} Admins`,
                 }}
               />
             </MDBox>
@@ -61,13 +106,28 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
+                color="dark"
+                icon="weekend"
+                title="Students"
+                count={totalUsers.students}
                 percentage={{
                   color: "success",
-                  amount: "+3%",
-                  label: "than last month",
+                  amount: "",
+                  label: "Just updated",
+                }}
+              />
+            </MDBox>
+          </Grid>
+          <Grid item xs={23} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <ComplexStatisticsCard
+                icon="leaderboard"
+                title="Teachers"
+                count={totalUsers.teachers}
+                percentage={{
+                  color: "success",
+                  amount: "",
+                  label: "Just updated",
                 }}
               />
             </MDBox>
@@ -77,23 +137,8 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Revenue"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="Followers"
-                count="+91"
+                title="Hostel Masters"
+                count={totalUsers.hostelMasters}
                 percentage={{
                   color: "success",
                   amount: "",
@@ -109,9 +154,8 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
+                  title="User Registration"
+                  // description="Last Campaign Performance"
                   chart={reportsBarChartData}
                 />
               </MDBox>
@@ -120,13 +164,12 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="success"
-                  title="daily sales"
+                  title="Interations"
                   description={
                     <>
-                      (<strong>+15%</strong>) increase in today sales.
+                      (<strong>+15%</strong>) increase in today.
                     </>
                   }
-                  date="updated 4 min ago"
                   chart={sales}
                 />
               </MDBox>
@@ -135,9 +178,8 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="dark"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
-                  date="just updated"
+                  title="completed Terms"
+                  description="Last Year Performance"
                   chart={tasks}
                 />
               </MDBox>
@@ -147,17 +189,16 @@ function Dashboard() {
         <MDBox>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8}>
-              <Projects />
+              {/* <Projects /> */}
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
+              {/* <OrdersOverview /> */}
             </Grid>
           </Grid>
         </MDBox>
       </MDBox>
-      <Footer />
     </DashboardLayout>
   );
 }
 
-export default Dashboard;
+export default AdminDashboard;

@@ -28,7 +28,7 @@ import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
 import Sidenav from "examples/Sidenav";
-import Configurator from "examples/Configurator";
+// import Configurator from "examples/Configurator";
 
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
@@ -50,8 +50,12 @@ import routes from "routes";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 // Images
-import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
+import brandWhite from "assets/images/brand-stud-care.png";
+import brandDark from "assets/images/brand-stud-care.png";
+
+import SingIn from "layouts/authentication/sign-in";
+import { Login } from "@mui/icons-material";
+import SingUp from "layouts/authentication/sign-up";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -122,6 +126,10 @@ export default function App() {
       return null;
     });
 
+  const isAuthenticated = () => {
+    return localStorage.getItem("authToken") !== null;
+  };
+
   const configsButton = (
     <MDBox
       display="flex"
@@ -160,14 +168,24 @@ export default function App() {
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
             />
-            <Configurator />
-            {configsButton}
+            {/* <Configurator /> */}
+            {/* {configsButton} */}
           </>
         )}
-        {layout === "vr" && <Configurator />}
+        {/* {layout === "vr" && <Configurator />} */}
         <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+          {isAuthenticated() ? (
+            <>
+              {getRoutes(routes)}
+              <Route path="*" element={<Navigate to="/dashboard" />} />
+            </>
+          ) : (
+            <>
+              <Route path="/authentication/sign-in" element={<SingIn />} />
+              <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+            </>
+          )
+          }
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -179,19 +197,29 @@ export default function App() {
           <Sidenav
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="Material Dashboard 2"
+            brandName="Stud-Care"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
-          <Configurator />
-          {configsButton}
+          {/* <Configurator /> */}
+          {/* {configsButton} */}
         </>
       )}
-      {layout === "vr" && <Configurator />}
+      {/* {layout === "vr" && <Configurator />} */}
       <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        {isAuthenticated() ? (
+          <>
+            {getRoutes(routes)}
+            <Route path="*" element={<Navigate to="/dashboard" />} />
+          </>
+        ) : (
+          <>
+            <Route path="/authentication/sign-in" element={<SingIn />} />
+            <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+          </>
+        )
+        }
       </Routes>
     </ThemeProvider>
   );
